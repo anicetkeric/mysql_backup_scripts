@@ -9,9 +9,11 @@ set -eu
 mysql -u root -p -e "CREATE USER 'dump'@'localhost' IDENTIFIED BY 'password';";
 mysql -u root -p -e "GRANT SELECT, SHOW DATABASES, LOCK TABLES, SHOW VIEW ON *. * TO 'dump'@'localhost' IDENTIFIED BY 'password' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;";
 
+
 ## parameter
 USER='dump'
 PASS='password' 
+
 # Backup storage directory
 DATADIR="/var/backups/mysql"
 # Working directory 
@@ -29,8 +31,8 @@ EXCLUSIONS='(information_schema|performance_schema|mysql)'
 EMAIL=0
 
 
-## Start script
 
+## Start script
 ionice -c3 -p$$ &>/dev/null
 renice -n 19 -p $$ &>/dev/null
 
@@ -74,7 +76,7 @@ ln ${DATANAME}${COMPRESSIONEXT} last${COMPRESSIONEXT}
 # Removing the temporary directory 
 rm -rf ${DATATMP}/${DATANAME}
 
-echo "Suppression des vieux backup : "
+echo "delete old backup : "
 find ${DATADIR} -name "*${COMPRESSIONEXT}" -mtime +${RETENTION} -print -exec rm {} \\;
 
 
