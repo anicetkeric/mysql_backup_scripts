@@ -14,6 +14,7 @@ mysql -u root -p -e "GRANT SELECT, SHOW DATABASES, LOCK TABLES, SHOW VIEW ON *. 
 USER='dump'
 PASS='password' 
 
+
 # Backup storage directory
 DATADIR="/var/backups/mysql"
 # Working directory 
@@ -29,8 +30,6 @@ RETENTION=30
 EXCLUSIONS='(information_schema|performance_schema|mysql)'
 # Email for errors (0 to disable)
 EMAIL=0
-
-
 
 ## Start script
 ionice -c3 -p$$ &>/dev/null
